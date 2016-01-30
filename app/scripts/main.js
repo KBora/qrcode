@@ -191,6 +191,7 @@
       if(self.onframe) self.onframe();
 
       coordinatesHaveChanged = false;
+      requestAnimationFrame(captureFrame.bind(self));
     };
 
     var getCamera = function(videoSource, cb) {
@@ -220,8 +221,10 @@
           coordinatesHaveChanged = true;
           
           var isSetup = setupVariables(e);
+
+
           if(isSetup) {
-            setInterval(captureFrame.bind(self), 4);
+            requestAnimationFrame(captureFrame.bind(self));
           }
           else {
             // This is just to get around the fact that the videoWidth is not
@@ -229,7 +232,7 @@
             setTimeout(function() {
               setupVariables(e);
 
-              setInterval(captureFrame.bind(self), 4);
+              requestAnimationFrame(captureFrame.bind(self));
             }, 100);
           }
 
